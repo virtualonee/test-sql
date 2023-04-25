@@ -48,7 +48,7 @@ SELECT employee.id, employee.name,
 COUNT(sales.id) as sales_c,
 rank() OVER (ORDER BY COUNT(sales.id) DESC) as sales_rank_c, 
 coalesce(SUM(sales.price), 0) as sales_s,
-rank() OVER (ORDER BY SUM(sales.price)) as sales_rank_s
+rank() OVER (ORDER BY SUM(sales.price) DESC NULLS LAST) as sales_rank_s
 FROM employee 
 LEFT JOIN sales on employee.id=sales.employee_id 
 GROUP BY employee.id ORDER BY employee.id;
